@@ -1,7 +1,7 @@
 checklist = list()
 
 # CREATE FUNCTION
-def create(item):
+def add_to_list(item):
     checklist.append(item)
 
 # READ FUNCTION
@@ -18,86 +18,98 @@ def destroy(index):
 
 # FINDING ALL THE ITEMS FUNCTION
 def list_all_item():
-    index = 0
+    number = 0
     for every_item in checklist:
-        print(str(index) + every_item)
-        index += 1
+        print(str(number) + " " + every_item)
+        number += 1
 
+# MARK COMPLECTED FUNCTION ON THE LIST
 def mark_complected(index):
-    checklist[index] = str("√") + checklist[index]
+    checklist[index] = "√" + checklist[index]
 
-print("\033[1;34;40m")
+#Changes the color of text in the terminal
+print("\033[1;31;40m")
 
-def select(function_code):
+#USER INPUT FUNCTION
+def user_input():
+    print("press C to add to the list, R to remove, U to update item, p to show the list")
+    print("press Q to exit the program")
+    user_input = input("")
+
     #CREATE ITEM
-    if function_code.lower() == "c":
-        input_item = user_input(" Input item: ")
-        create(input_item)
+    if user_input == "A":
+        input_item = input("ADD to LIST: ")
+        add_to_list(input_item)
 
-    #READ ITEM
-    elif function_code.lower() == "r":
-        item_index = user_input("Index number?")
+    #REMOVE FROM THE LIST
+    elif user_input == "R":
+        item_number = input("what do you want to delete? press x to cancel ")
+        if(item_number != "x"):
+            destroy(int(item_number))
 
-        read(item_index)
+    #UPDATE ITEM IN LIST
+    elif user_input == "U":
+        item_number = input("what do you want to update? press x to cancel")
+        if item_number != "x":
+            update(int(item_number))
+
+    # MARK ITEM AS COMPLECTED
+    elif user_input == "C":
+        item_number = input("which item you want to mark complected: ? x to cancel ")
+        if item_number != "x":
+            mark_complected(int(item_number))
+
 
     #PRINT ALL ITEMS
-    elif function_code.lower() == "p":
+    elif user_input == "p":
         list_all_item()
 
-    elif function_code.lower() == "q":
-        #THIS IS WHERE THE LOOP WILL END
+    elif user_input == "q":
+        # This will end the loop from running forever
         return False
 
     #CATCH ALL
     else:
-        print(" Go get a job")
+        print("Unknown error")
 
     return True
 
-#USER INPUT FUNCTION
-def user_input():
-    user_input = input(prompt)
 
-
-
-# TEST FUNCTION
-def test():
-
-    create("purple sox")
-    create("red clock")
-    create("Computer")
-    create("Pencil")
-    create("Notebook")
-    create("Desktop")
-
-    print(read(0))
-    print(read(1))
-
-    update(0, "purple socks")
-    destroy(1)
-
-    print(read(0))
-
-    # LET'S TEST CREATE ITEM IN SELECT FUNCTION
-    select("C")
-    #VIEW ALL THE RESULTS
-    list_all_item()
-    #CALL FUNCTION WITH NEW VALUE
-    select("R")
-    #VIEW RESULTS
-    list_all_item()
-
-    #USER INPUT test
-    user_value = user_input("Please enter a vlue: ")
-    print(user_value)
-
-test()
-    # list_all_item()
-    # mark_complected(2)
-    
-#WHILE LOOP TO CONTINUE RUNNING THE PROGRAM
+# # TEST FUNCTION
+# def test():
+#
+#     create("purple sox")
+#     create("red clock")
+#     create("Computer")
+#     create("Pencil")
+#     create("Notebook")
+#     create("Desktop")
+#
+#     print(read(0))
+#     print(read(1))
+#
+#     update(0, "purple socks")
+#     destroy(1)
+#
+#     print(read(0))
+#
+#     # LET'S TEST CREATE ITEM IN SELECT FUNCTION
+#     select("C")
+#     #VIEW ALL THE RESULTS
+#     list_all_item()
+#     #CALL FUNCTION WITH NEW VALUE
+#     select("R")
+#     #VIEW RESULTS
+#     list_all_item()
+#
+#     #USER INPUT test
+#     user_value = user_input("Please enter a vlue: ")
+#     print(user_value)
+#
+#     test()
+#     # list_all_item()
+#     # mark_complected(2)
+# #WHILE LOOP TO CONTINUE RUNNING THE PROGRAM
 running = True
 while running:
-    selection = user_input(
-    "press C to add to list, R to Read from the list and P to display the list and q to quit the program")
-    running = select(selection)
+    running = user_input()
